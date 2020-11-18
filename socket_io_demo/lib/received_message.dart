@@ -17,6 +17,7 @@ class ReceivedMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     message = convert.jsonDecode(content);
+    print(context);
     return Container(
         child: Padding(
       padding:

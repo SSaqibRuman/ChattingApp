@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'api.dart';
+import 'messages_screen.dart';
 import 'models.dart';
 
 class CreateChatRoom extends StatefulWidget {
@@ -222,11 +223,23 @@ class _CreateChatRoomState extends State<CreateChatRoom> {
   }
 
   void addChatRoom({String chatRoomName, List<int> usersId}) async {
-    await ChatAPIs.createChatRoom(
+    String chatRoomID = await ChatAPIs.createChatRoom(
         avatarUrl: "",
         chatRoomName: chatRoomName,
         creatorId: widget.userId,
         isGroup: !widget.isIndividualChat,
         usersIds: usersId);
+    if (chatRoomID != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Messages(
+            chatRoomId: int.parse(chatRoomID),
+            userId: widget.userId,
+            chatRoomName: widget.isIndividualChat ? chatRoomName.replaceAll("_", "").replaceAll(widget.userName, "") : chatRoomName,
+          ),
+        ),
+      );
+    } else {}
   }
 }

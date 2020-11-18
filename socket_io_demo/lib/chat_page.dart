@@ -161,7 +161,7 @@ class _ChatPageState extends State<ChatPage>
                       return CircularProgressIndicator();
                     }
 
-                    return Container(
+                    return Expanded(
                       child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
@@ -174,6 +174,7 @@ class _ChatPageState extends State<ChatPage>
                               //child: Text(chatObj.name ?? ""),
                               child: ChatListViewItem(
                                 chat: chatObj,
+                                userID: userID,
                                 hasUnreadMessage: false,
                               ),
                               onTap: () {
@@ -205,11 +206,13 @@ class _ChatPageState extends State<ChatPage>
 
 class ChatListViewItem extends StatelessWidget {
   final ChatRoom chat;
+  final int userID;
   final bool hasUnreadMessage;
 
   const ChatListViewItem({
     Key key,
     this.chat,
+    this.userID,
     this.hasUnreadMessage,
   }) : super(key: key);
 
@@ -245,7 +248,7 @@ class ChatListViewItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        TimeAgo.getTimeAgo(DateTime.parse(chat.created)),
+                        TimeAgo.getTimeAgo(DateTime.parse(chat.modified)),
                         style: TextStyle(fontSize: 12),
                       ),
                       hasUnreadMessage
@@ -273,7 +276,7 @@ class ChatListViewItem extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => Messages(
                           chatRoomId: chat.chatRoomId,
-                          userId: chat.userId,
+                          userId: userID,
                           chatRoomName: chat.isGroup
                               ? chat.chatRoomName
                               : chat.name,

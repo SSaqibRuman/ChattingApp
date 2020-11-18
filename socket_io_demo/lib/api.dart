@@ -111,21 +111,29 @@ class ChatAPIs {
     }
   }
 
-  static Future<void> createChatRoom({String chatRoomName, int creatorId, String avatarUrl, bool isGroup, List<int> usersIds}) async {
+  static Future<String> createChatRoom(
+      {String chatRoomName,
+      int creatorId,
+      String avatarUrl,
+      bool isGroup,
+      List<int> usersIds}) async {
     var body = {
-      "chatRoomName" : "$chatRoomName",
-      "creatorId" : "$creatorId",
-      "avatarUrl" : "$avatarUrl",
-      "isGroup" : "${isGroup?0:1}",
-      "usersIds" : convert.jsonEncode(usersIds).toString(),
+      "chatRoomName": "$chatRoomName",
+      "creatorId": "$creatorId",
+      "avatarUrl": "$avatarUrl",
+      "isGroup": "$isGroup",
+      "usersIds": convert.jsonEncode(usersIds),
     };
+    print(body);
     //{chatRoomName: "ChatRoomName","usersIds":[1,2,3], creatorId:1, avatarUrl:"", isGroup:1}
     var response = await http.post(_CREATE_CHAT_ROOM, body: body);
     if (response.statusCode == 200) {
-      
+      print("${convert.jsonDecode(response.body)["chatRoomID"]}");
+      return("${convert.jsonDecode(response.body)["chatRoomID"]}");
     } else {
       print('Request failed with status: ${response.statusCode}.');
       print('Request failed with status: ${response.body}.');
+      return null;
     }
   }
 }

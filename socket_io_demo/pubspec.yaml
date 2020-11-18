@@ -41,6 +41,7 @@ dependencies:
   fluttertoast: ^7.1.1
   azblob: ^1.0.3
   mime: ^0.9.7
+  firebase_messaging: ^7.0.3
 
 dev_dependencies:
   flutter_test:

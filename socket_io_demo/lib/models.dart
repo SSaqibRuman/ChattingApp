@@ -1,10 +1,8 @@
 class ChatRoom {
-  int participantId;
   String lastMessage;
   String avatarUrl;
   int userId;
   int chatRoomId;
-  String created;
   String modified;
   String description;
   String name;
@@ -12,25 +10,21 @@ class ChatRoom {
   String chatRoomName;
 
   ChatRoom(
-      {this.participantId,
-      this.lastMessage,
+      {this.lastMessage,
       this.avatarUrl,
       this.userId,
       this.chatRoomId,
       this.modified,
-      this.created,
       this.description,
       this.name,
       this.isGroup,
       this.chatRoomName});
 
   ChatRoom.fromJson(Map<String, dynamic> json) {
-    participantId = json['participant_id'];
     lastMessage = json['last_message'];
     avatarUrl = json['avatar_url'];
     userId = json['user_id'];
     chatRoomId = json['chatRoom_id'];
-    created = json['created'];
     modified = json['modified'];
     description = json['description'];
     name = json['name'];
@@ -40,13 +34,11 @@ class ChatRoom {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['participant_id'] = this.participantId;
     data['last_message'] = this.lastMessage;
     data['avatar_url'] = this.avatarUrl;
     data['user_id'] = this.userId;
     data['chatRoom_id'] = this.chatRoomId;
     data['modified'] = this.modified;
-    data['created'] = this.created;
     data['description'] = this.description;
     data['name'] = this.name;
     data['isGroup'] = this.isGroup;
@@ -85,7 +77,6 @@ class Message {
   String senderName;
   String avatarUrl;
   String isRead;
-  String rowNumber;
   String created;
   String message;
 
@@ -95,7 +86,6 @@ class Message {
       this.senderName,
       this.avatarUrl,
       this.isRead,
-      this.rowNumber,
       this.message,
       this.created});
 
@@ -106,7 +96,6 @@ class Message {
     message = json['message'];
     avatarUrl = json['avatar_url'];
     isRead = json['isRead'].toString();
-    rowNumber = json['RowNumber'];
     created = json['created'];
   }
 
@@ -118,37 +107,57 @@ class Message {
     data['message'] = this.message;
     data['avatar_url'] = this.avatarUrl;
     data['isRead'] = this.isRead;
-    data['RowNumber'] = this.rowNumber;
     data['created'] = this.created;
     return data;
   }
 }
 
 class ReceivedMessage {
-  int senderId;
+  int chatId;
   int chatRoomId;
-  String messageType;
+  int senderId;
+  String senderName;
+  String avatarUrl;
+  int isRead;
+  String created;
   String message;
 
   ReceivedMessage(
-      {this.senderId, this.chatRoomId, this.messageType, this.message});
+      {this.chatId,
+      this.chatRoomId,
+      this.senderId,
+      this.senderName,
+      this.avatarUrl,
+      this.isRead,
+      this.created,
+      this.message});
 
   ReceivedMessage.fromJson(Map<String, dynamic> json) {
-    senderId = json['senderId'];
-    chatRoomId = json['chatRoomId'];
-    messageType = json['messageType'];
+    chatId = json['chat_id'];
+    chatRoomId = json['chatRoom_id'];
+    senderId = json['sender_id'];
+    senderName = json['senderName'];
+    avatarUrl = json['avatar_url'];
+    isRead = json['isRead'];
+    created = json['created'];
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['senderId'] = this.senderId;
-    data['chatRoomId'] = this.chatRoomId;
-    data['messageType'] = this.messageType;
+    data['chat_id'] = this.chatId;
+    data['chatRoom_id'] = this.chatRoomId;
+    data['sender_id'] = this.senderId;
+    data['senderName'] = this.senderName;
+    data['avatar_url'] = this.avatarUrl;
+    data['isRead'] = this.isRead;
+    data['created'] = this.created;
     data['message'] = this.message;
     return data;
   }
 }
+
+
 
 class UserModel {
   int userId;
@@ -182,11 +191,11 @@ class UserModel {
 
 class CreateChatRoomModel {
   String chatRoomName;
-  int creatorId;
+  String creatorId;
   String avatarUrl;
-  bool isGroup;
-  bool isActive;
-  List<int> usersIds;
+  String isGroup;
+  String isActive;
+  List<String> usersIds;
 
   CreateChatRoomModel(
       {this.chatRoomName,

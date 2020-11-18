@@ -62,7 +62,7 @@ class _MessagesState extends State<Messages> {
           childList.add(Align(
             alignment: Alignment(1, 0),
             child: SendedMessageWidget(
-              content: '{"${_msg.messageType}":"${_msg.message}"}',
+              content: '${_msg.message}',
               time: TimeAgo.getTimeAgo(DateTime.now()),
             ),
           ));
@@ -70,7 +70,7 @@ class _MessagesState extends State<Messages> {
           childList.add(Align(
             alignment: Alignment(-1, 0),
             child: ReceivedMessageWidget(
-              content: '{"${_msg.messageType}":"${_msg.message}"}',
+              content: '${_msg.message}',
               time: TimeAgo.getTimeAgo(DateTime.now()),
             ),
           ));
@@ -167,6 +167,7 @@ class _MessagesState extends State<Messages> {
                         padding: const EdgeInsets.only(left: 8.0),
                         child: TextField(
                           maxLines: 20,
+                          maxLength: 30,
                           controller: _text,
                           decoration: InputDecoration(
                             suffixIcon: Container(
@@ -217,6 +218,7 @@ class _MessagesState extends State<Messages> {
                             ),
                             border: InputBorder.none,
                             hintText: "Enter your message",
+                            counterText: "",
                           ),
                         ),
                       ),
